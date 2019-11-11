@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CommentResource;
+use App\Http\Resources\QueryBuilder\CommentBuildedResource;
 use App\Http\Resources\UserResource;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
@@ -35,8 +36,18 @@ class UserController extends Controller
      * @param User $user
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function comments(Request $request, User $user)
+    public function comments(Request $request, User $user) // 7 by Eloquent
     {
         return CommentResource::collection($this->repository->getComments($user));
+    }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function commentsByBuilder(Request $request, User $user) // 7 by QueryBuilder
+    {
+        return CommentBuildedResource::collection($this->repository->getCommentsByQueryBuilder($user));
     }
 }
