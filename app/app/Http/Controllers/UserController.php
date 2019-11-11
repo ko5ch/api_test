@@ -50,4 +50,14 @@ class UserController extends Controller
     {
         return CommentBuildedResource::collection($this->repository->getCommentsByQueryBuilder($user));
     }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function commentsByRawQuery(Request $request, User $user) // 7 by Raw SQL
+    {
+        return CommentBuildedResource::collection($this->repository->getCommentsRaw($user));
+    }
 }

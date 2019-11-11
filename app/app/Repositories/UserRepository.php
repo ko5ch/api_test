@@ -90,4 +90,21 @@ class UserRepository
         return $comments;
     }
 
+    /**
+     * @param User $user
+     * @return Collection
+     */
+    public function getCommentsRaw(User $user) // 7 Raw
+    {
+        $comments = collect(DB::select( DB::raw(
+            "SELECT comments.id, comments.content FROM comments, posts 
+                          WHERE comments.post_id = posts.id  
+                          AND comments.commentator_id = :user_id
+                          AND posts.image_id IS NOT NULL 
+                          ORDER BY comments.created_at DESC "),
+            [ 'user_id' => $user->id, ]));
+
+        return $comments;
+    }
+
 }

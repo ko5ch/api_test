@@ -15,6 +15,8 @@ use App\Http\Controllers\UserController;
 Route::prefix('users')->group(function () {
     Route::get('', [UserController::class, 'users'])->name('users'); // 6
     Route::get('{user}/comments/', [UserController::class, 'comments'])->name('user.comments'); // 7 by Eloquent
-    Route::get('{user}/comments_by_builder/', [UserController::class, 'commentsByBuilder']) // 7 by QueryBuilder
+    Route::get('{user}/comments_by_builder/', [UserController::class, 'commentsByBuilder']) // 7.1 by QueryBuilder
         ->name('user.comments_builder');
+    Route::get('{user}/comments_by_raw/', [UserController::class, 'commentsByRawQuery']) // 7.1 by RAW SQL
+    ->name('user.comments_builder');
 });

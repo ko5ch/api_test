@@ -21,7 +21,7 @@ class CommentBuildedResource extends JsonResource
         return [
             'id'            => $this->id,
             'content'       => $this->content,
-            'post'          => PostBuildedResource::collection($this->post),
+            'post'          => optional($this)->post ? PostBuildedResource::collection($this->post) : null,
         ];
     }
 }
