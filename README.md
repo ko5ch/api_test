@@ -36,6 +36,7 @@ install deps in container:
 composer install
 ```
 create manually new database "laravel" via sql manager(like HeidiSql, etc.)
+(host:10.0.75.2, port:5432, username: postgres)
 
 migration and seeders command:
 ```
