@@ -17,7 +17,7 @@ class UserRepository
      */
     public function getUsers($post_limit = null) // 6
     {
-        $users = User::with('posts', 'posts.comments')
+        $users = User::with(['posts', 'posts.comments'])
             ->actualPosts()
             ->get();
 
@@ -27,6 +27,13 @@ class UserRepository
                 return $user;
             });
         }
+        $users = $users->map(function ($user) {     // 6.3
+            $user->posts = $user->posts->sortBy(function ($post) {
+                return $post->comments->count();
+            });
+            return $user;
+        });
+
         return $users;
     }
 
