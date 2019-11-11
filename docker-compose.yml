@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+
+  front:
+    image: abiosoft/caddy
+    container_name: "api_front"
+    environment:
+      - CADDYPATH=/etc/caddycerts
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./.docker/caddy/Caddyfile:/etc/Caddyfile
+      - ./.docker/caddy/caddyssl:/etc/caddycerts
+    depends_on:
+      - app
+
+
+  pgsql:
+    container_name: "pgsql"
+    image: postgres:10.1
+    ports:
+        - 5432:5432
+    logging:
+        driver: none
+    volumes:
+      - postgresdata:/data/db
+
+  node:
+    build: ./.docker/node
+    container_name: "api_node"
+    tty: true
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+    depends_on:
+      - app
+
+  app:
+    image: rocket_app:alpine
+    build: ./.docker/app
+    container_name: "api_app"
+    volumes:
+      - ./app:/app
+    depends_on:
+      - pgsql
+
+volumes:
+  postgresdata:
