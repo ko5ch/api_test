@@ -35,7 +35,7 @@ install deps in container:
 ```
 composer install
 ```
-create manually new database "laravel" in sql manager(like HeidiSql, etc.)
+create manually new database "laravel" via sql manager(like HeidiSql, etc.)
 
 migration and seeders command:
 ```
